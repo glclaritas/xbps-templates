@@ -1,0 +1,118 @@
+# Template file for 'sunshine'
+pkgname=sunshine
+version=v2025.628.4510
+revision=1
+archs="x86_64* aarch64*"
+build_style=cmake
+configure_args="-Wno-dev -DBUILD_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DBUILD_DOCS=OFF -DSUNSHINE_EXECUTABLE_PATH=/usr/bin/sunshine
+ -DSUNSHINE_ASSETS_DIR=/usr/share/sunshine -DCUDA_FAIL_ON_MISSING=OFF"
+hostmakedepends="boost cmake git make nodejs pkg-config wayland-devel"
+makedepends="boost-devel doxygen ffmpeg-devel graphviz libayatana-appindicator-devel libboost_filesystem
+ libboost_locale libboost_program_options libcap-devel libcurl-devel libdrm-devel libevdev-devel
+ libnuma-devel libnotify-devel libopusenc-devel libsvt-av1-devel libva-devel libvdpau-devel libX11-devel
+ libxcb-devel libXcursor-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel
+ libXtst-devel MesaLib-devel miniupnpc-devel nv-codec-headers opus-devel openssl-devel
+ pulseaudio-devel x264-devel x265-devel wayland-protocols"
+short_desc="Self-hosted GameStream host for Moonlight"
+maintainer="myothk <glclaritas@gmail.com>"
+license="GPL-3.0-only"
+homepage="https://app.lizardbyte.dev/Sunshine"
+
+# Sub Module versions/commit ids
+_simplewebserver_commit=187f798d54a9c6cee742f2eb2c54e9ba26f5a385
+_tpcb_commit=cc520397504bb72bc6df79ff03eb72988a6dc50d
+_vgec_commit=8d71f6740ffff4671cdadbca255ce528e3cd3fef
+_build_deps_commit=cf5dffaf4c62a5e5e2949c37b642cfc5ad962b98
+_doxyconfig_commit=a73f908fb70fac4f6076a28f0a751239ea5ac2d3
+_googletest_commit=52eb8108c5bdec04579160ae17225d66034bd723
+_inputtino_commit=3a7a658782217d77ee1d1055c3930874cfd299aa
+_libdisplaydevice_commit=a0674741ec9a5eea335cddc0e7002b9f50782909
+_moonlightcommonc_commit=58902e342f6d53d6783c99fe79a03168d46cd56f
+_nanors_commit=19f07b513e924e471cadd141943c1ec4adc8d0e0
+_nvcodecheaders_commit=22441b505d9d9afc1e3002290820909846c24bdc
+_nvapiopensdk_commit=cce4e90b629f712ae6eebafac97739bd1196cdef
+_tray_commit=f6d0684c2bc3b288b3cc29d8a51e0f4654eb8b72
+_waylandprotocols_commit=0091197f5c1b1f2c131f1410e99f9c95d50646be
+_wlrprotocols_commit=2ec67ebd26b73bada12f3fa6afdd51563b656722
+_enet_commit=44c85e16279553d9c052e572bcbfcd745fb74abf
+
+distfiles="https://github.com/LizardByte/Sunshine/archive/refs/tags/${version}.tar.gz
+ https://github.com/LizardByte-infrastructure/Simple-Web-Server/archive/${_simplewebserver_commit}.tar.gz>Simple-Web-Server.tar.gz
+ https://github.com/michaeltyson/TPCircularBuffer/archive/${_tpcb_commit}.tar.gz>TPCircularBuffer.tar.gz
+ https://github.com/LizardByte/Virtual-Gamepad-Emulation-Client/archive/${_vgec_commit}.tar.gz>ViGEmClient.tar.gz
+ https://github.com/LizardByte/build-deps/archive/${_build_deps_commit}.tar.gz>build-deps.tar.gz
+ https://github.com/LizardByte/doxyconfig/archive/${_doxyconfig_commit}.tar.gz>doxyconfig.tar.gz
+ https://github.com/google/googletest/archive/${_googletest_commit}.tar.gz>googletest.tar.gz
+ https://github.com/games-on-whales/inputtino/archive/${_inputtino_commit}.tar.gz>inputtino.tar.gz
+ https://github.com/LizardByte/libdisplaydevice/archive/${_libdisplaydevice_commit}.tar.gz>libdisplaydevice.tar.gz
+ https://github.com/moonlight-stream/moonlight-common-c/archive/${_moonlightcommonc_commit}.tar.gz>moonlight-common-c.tar.gz
+ https://github.com/sleepybishop/nanors/archive/${_nanors_commit}.tar.gz>nanors.tar.gz
+ https://github.com/FFmpeg/nv-codec-headers/archive/${_nvcodecheaders_commit}.tar.gz>nv-codec-headers.tar.gz
+ https://github.com/LizardByte/nvapi-open-source-sdk/archive/${_nvapiopensdk_commit}.tar.gz>nvapi-open-source-sdk.tar.gz
+ https://github.com/LizardByte/tray/archive/${_tray_commit}.tar.gz>tray.tar.gz
+ https://github.com/LizardByte-infrastructure/wayland-protocols/archive/${_waylandprotocols_commit}.tar.gz>wayland-protocols.tar.gz
+ https://github.com/LizardByte-infrastructure/wlr-protocols/archive/${_wlrprotocols_commit}.tar.gz>wlr-protocols.tar.gz
+ https://github.com/cgutman/enet/archive/${_enet_commit}.tar.gz>enet.tar.gz"
+
+checksum="e71ffbd31d09b883fbc5f75a5d1f411d173defe05987caa855ebda759ffeb969
+ 941212c35e0aedd45f486df2b32b6bf766cc3eca2fe8c908d86ed7315e441739
+ fa5538697e2dde0262cdab273baf9e1bc6568226e9cb2c24c89ce8edd0b64fe3
+ 27907cba8c017de220b66e036ed04a39f5eacb9182846700047420aef2f5cd0e
+ 84dfb94797eca7eefbbadebbc48e3acc024e1c698e96a7feae1087ed2e89f750
+ fbb2432dea902d63ba7aa5ad1a59d769168b15d6defd4287bc95b7da0ee65e10
+ 745c55415660044610f7fcd3af7a6420d5de16a7dbb9ebfe2e131275676232be
+ 880a4bfc5d9479bf19d7a3ce5342f42e0e16668e6f24f96ebc987591d9f440f0
+ 527e143460c2d8e744aeb36f195956800f21c5afb96d463bc322b6c261d849c7
+ 7cfa59e556238bc073b323c5a9e736ac75446fefea7db522596aa56dec52d4f1
+ 2ece5782cd6ff87f74ebd0ffaf28b9256b498b6b3f5344aeb75b873c15eeb2dc
+ dc28f764fbc72f6ac2a96fcace252e6ecc84b308b8d4400820203cc901bae596
+ c96e5b555c08e25031d63864ff70c1ec0a6ad20e9ef6636c062ce82b8260ec63
+ fb8473309544c05ba6e404bff478b92b69b0ea626107564101ab8303764b66df
+ c549fb84cb9971f0ae0c59591f33ffdc7be3ceaab4bc2d108a828a5770857dfd
+ 1c9536fb9b2a97ebca59f4bd0c60124f8ef99614cec7d09e1290cbe6c4aacbc7
+ 9009b96e32c72b138294e0b406d23f243895b805e969524fa8ce8379f2ec3d37"
+
+skip_extraction="
+ Simple-Web-Server.tar.gz
+ TPCircularBuffer.tar.gz
+ ViGEmClient.tar.gz
+ build-deps.tar.gz
+ doxyconfig.tar.gz
+ googletest.tar.gz
+ inputtino.tar.gz
+ libdisplaydevice.tar.gz
+ moonlight-common-c.tar.gz
+ nanors.tar.gz
+ nv-codec-headers.tar.gz
+ nvapi-open-source-sdk.tar.gz
+ tray.tar.gz
+ wayland-protocols.tar.gz
+ wlr-protocols.tar.gz
+ enet.tar.gz"
+
+post_extract() {
+	vsrcextract -C third-party/Simple-Web-Server Simple-Web-Server.tar.gz
+	vsrcextract -C third-party/TPCircularBuffer TPCircularBuffer.tar.gz
+	vsrcextract -C third-party/ViGEmClient ViGEmClient.tar.gz
+	vsrcextract -C third-party/build-deps build-deps.tar.gz
+	vsrcextract -C third-party/doxyconfig doxyconfig.tar.gz
+	vsrcextract -C third-party/googletest googletest.tar.gz
+	vsrcextract -C third-party/inputtino inputtino.tar.gz
+	vsrcextract -C third-party/libdisplaydevice libdisplaydevice.tar.gz
+	vsrcextract -C third-party/moonlight-common-c moonlight-common-c.tar.gz
+	vsrcextract -C third-party/nanors nanors.tar.gz
+	vsrcextract -C third-party/nv-codec-headers nv-codec-headers.tar.gz
+	vsrcextract -C third-party/nvapi-open-source-sdk nvapi-open-source-sdk.tar.gz
+	vsrcextract -C third-party/tray tray.tar.gz
+	vsrcextract -C third-party/wayland-protocols wayland-protocols.tar.gz
+	vsrcextract -C third-party/wlr-protocols wlr-protocols.tar.gz
+	vsrcextract -C third-party/moonlight-common-c/enet enet.tar.gz
+}
+
+pre_configure() {
+	export BRANCH=master
+	export BUILD_VERSION=${version}
+	export COMMIT=v${version}
+
+	rm -f third-party/moonlight-common-c/CMakeLists.txt
+}
