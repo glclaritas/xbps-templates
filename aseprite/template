@@ -1,0 +1,87 @@
+# Template file for 'aseprite'
+pkgname=aseprite
+version=1.3.14.4
+revision=1
+archs="i686 x86_64"
+build_style=cmake
+hostmakedepends="clang cmake gcc gn ninja unzip tar"
+makedepends="pkg-config harfbuzz-devel libcurl-devel cmark-devel freetype-devel giflib-devel libpng-devel pixman-devel
+ libwebp-devel libjpeg-turbo-devel tinyxml2-devel libX11-devel libXcursor-devel libXi-devel MesaLib-devel fontconfig-devel zlib-devel"
+configure_args="
+ -Wno-dev
+ -DUSE_SHARED_CMARK=$(vopt_if dynamic ON OFF)
+ -DUSE_SHARED_CURL=$(vopt_if dynamic ON OFF)
+ -DUSE_SHARED_FREETYPE=$(vopt_if dynamic ON OFF)
+ -DUSE_SHARED_GIFLIB=$(vopt_if dynamic ON OFF)
+ -DUSE_SHARED_HARFBUZZ=$(vopt_if dynamic ON OFF)
+ -DUSE_SHARED_LIBPNG=$(vopt_if dynamic ON OFF)
+ -DUSE_SHARED_PIXMAN=$(vopt_if dynamic ON OFF)
+ -DUSE_SHARED_TINYEXIF=OFF
+ -DUSE_SHARED_TINYXML=OFF
+ -DUSE_SHARED_ZLIB=$(vopt_if dynamic ON OFF)
+ -DENABLE_SCRIPTING=$(vopt_if scripting ON OFF)
+ -DENABLE_PSD=$(vopt_if psd ON OFF)
+ -DENABLE_UPDATER=OFF
+ -DENABLE_DESKTOP_INTEGRATION=ON
+ -DENABLE_QT_THUMBNAILER=OFF
+ -DENABLE_UNZIP=OFF
+ -DENABLE_TESTS=OFF
+ -DENABLE_BENCHMARKS=OFF
+ "
+ depends="cmark libglvnd libICE libSM libX11 libXau libXcursor libXdmcp libXext
+ libXfixes libXrender acl brotli bzip2 glibc libcrypto3 expat fontconfig freetype
+ libgcc libldap libpng libsasl libssl3 libstdc++ libuuid libxcb zlib"
+short_desc="Animated sprite editor and pixel art tool"
+maintainer="Naiko <glclaritas@gmail.com>"
+license="custom:Proprietary"
+homepage="https://aseprite.org"
+restricted=yes
+
+build_options="dynamic scripting psd"
+build_options_default="dynamic scripting psd"
+desc_option_dynamic="Link dynamically"
+desc_option_scripting="Enable support for lua scripting"
+desc_option_psd="Enable support for PSD files"
+
+case "$XBPS_TARGET_MACHINE" in
+	"x86_64")
+		_skia_arch="x64" ;;
+	"i686" )
+		_skia_arch="x86" ;;
+esac
+
+distfiles="https://github.com/aseprite/aseprite/releases/download/v1.3.14.2/Aseprite-v${version}-Source.zip
+ https://github.com/aseprite/skia/releases/download/m124-08a5439a6b/Skia-Linux-Release-${_skia_arch}.zip>skia.zip"
+checksum="d4e59025ad673c2da8c037ca01ce7d71181cae2e0d9b6cbd081eaf2dba120fda
+ a327e89b244f24cecaa34eb37544bae00d447b96c583d26ed29d6a3ad2e8a8b8"
+
+skip_extraction="skia.zip"
+
+post_extract() {
+	mkdir -p deps/skia
+	unzip ${XBPS_SRCDISTDIR}/${pkgname}-${version}/skia.zip -d deps/skia
+}
+pre_configure() {
+	export CC=gcc
+	export CXX=g++
+	DEPDIR="${XBPS_BUILDDIR}/${pkgname}-${version}/deps"
+	configure_args+=" -DSKIA_DIR=${DEPDIR}/skia"
+	configure_args+=" -DSKIA_LIBRARY_DIR=${DEPDIR}/skia/out/Release-${_skia_arch}"
+	configure_args+=" -DSKIA_LIBRARY=${DEPDIR}/skia/out/Release-${_skia_arch}/libskia.a"
+	configure_args+=" -DCMAKE_BUILD_TYPE=Release"
+	configure_args+=" -DLAF_BACKEND=skia"
+	configure_args+=" -DCMAKE_INSTALL_PREFIX=/usr"
+	configure_args+=" -G Ninja"
+}
+do_install() {
+	cmake --install build --prefix=usr
+
+	vbin usr/bin/aseprite
+	vbin usr/bin/aseprite-thumbnailer
+	vmkdir usr/share
+	for f in usr/share/{applications,aseprite,mime,thumbnailers}; do
+		mv $f ${PKGDESTDIR}/usr/share
+	done
+	vlicense EULA.txt
+}
+
