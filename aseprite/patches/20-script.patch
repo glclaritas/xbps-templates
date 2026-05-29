@@ -1,0 +1,24 @@
+--- a/src/app/script/canvas_widget.cpp
++++ b/src/app/script/canvas_widget.cpp
+@@ -154,15 +154,14 @@
+       break;
+     }
+ 
+-    case ui::kMouseWheelMessage:
+-      if (Wheel) {
+-        auto mouseMsg = *static_cast<ui::MouseMessage*>(msg);
+-        if (m_autoScaling) {
++    case ui::kMouseWheelMessage: {
++      auto mouseMsg = *static_cast<ui::MouseMessage*>(msg);
++      if (m_autoScaling) {
+           mouseMsg = makeScaled(&mouseMsg, bounds().origin());
+-        }
+-        Wheel(&mouseMsg);
+-        return true;
+       }
++      Wheel(&mouseMsg);
++      return true;
++    }
+       break;
+ 
+     case ui::kTouchMagnifyMessage: {
