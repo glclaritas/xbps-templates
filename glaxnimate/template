@@ -1,0 +1,19 @@
+# Template file for 'glaxnimate'
+pkgname=glaxnimate
+version=0.6.0
+revision=1
+build_style=cmake
+configure_args="-DBUILD_SHARED_LIBS=OFF -DQT_MAJOR_VERSION=6 -DQT_VERSION_MAJOR=6 -DKF_MAJOR=6"
+hostmakedepends="extra-cmake-modules gettext pkg-config python3 qt6-base qt6-tools"
+makedepends="ffmpeg6-devel kf6-karchive-devel kf6-kcompletion-devel
+ kf6-kconfig-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-ki18n-devel
+ kf6-kiconthemes-devel kf6-kwidgetsaddons-devel kf6-kxmlgui-devel
+ libarchive-devel potrace-devel python3-devel qt6-base-devel
+ qt6-imageformats qt6-svg-devel qt6-tools-devel zlib-devel"
+depends="hicolor-icon-theme qt6-imageformats"
+short_desc="Simple vector graphics animation program"
+maintainer="Naiko <glclaritas@gmail.com>"
+license="GPL-3.0-or-later"
+homepage="https://glaxnimate.org/"
+distfiles="${KDE_SITE}/glaxnimate/${version}/glaxnimate-${version}.tar.xz"
+checksum=4fe5e4d48124d499aab318c932884e3e98da2fd279399c3ba3c6a4d1e07de94a
